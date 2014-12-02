@@ -1,0 +1,123 @@
+using System;
+using System.IO;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace Todo
+{
+    public partial class ToDo : Form
+    {
+        public ToDo()
+        {
+            InitializeComponent();
+            load();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Add(textBox1.Text);
+            listBox2.Items.Add(dateTimePicker1.Text);
+            textBox1.Text = ("");
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            /*if (e.Key = OnKeyDown)
+            {
+                button1.Text = " Toegevoegd: " + textBox1.Text;
+            }*/
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            listBox1.Items.Clear();
+            listBox2.Items.Clear();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Remove(listBox1.SelectedItem);
+            listBox2.Items.Remove(listBox2.SelectedItem);
+           
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+          
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ToDo_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void textBox2_TextChanged_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void save()
+        {
+            if (listBox1.Items.Count > 0)
+            {
+                File.Delete("list.txt");
+                using (TextWriter TW = new StreamWriter("list.txt"))
+                {
+                    for (int i = 0; i < listBox1.Items.Count; i++)
+                    {
+                        Object obj1 = listBox1.Items[i];
+                        Object obj2 = listBox2.Items[i];
+
+                        TW.WriteLine(obj1 + ";" + obj2);
+                    }
+
+                    Process.Start("list.txt");
+                }
+            }
+        }
+
+        private void load()
+        {
+            using (TextReader TR = new StreamReader("list.txt"))
+            {
+                string line;
+                while ((line = TR.ReadLine()) != null)
+                {
+                    String[] array = line.Split(';');
+                    listBox1.Items.Add(array[0]);
+                    listBox2.Items.Add(array[1]);
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            save();
+        }
+
+    }
+
+}
